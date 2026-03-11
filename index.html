@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>synclib — Offline-first sync for every platform</title>
+  <meta name="description" content="Bidirectional database sync over Phoenix channels. TypeScript, Dart/Flutter, and Elixir. Sequence numbers for speed, Merkle trees for correctness.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ============ Navigation ============ -->
+  <nav class="nav">
+    <div class="container">
+      <a href="/" class="nav-logo">synclib</a>
+      <ul class="nav-links">
+        <li><a href="https://github.com/synclib-io" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="#get-started" class="btn-sm">Get Started</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============ Hero ============ -->
+  <section class="hero">
+    <div class="container">
+      <h1>Offline-first sync for <span class="gradient-text">every platform</span></h1>
+      <p class="subtitle">
+        Sequence numbers for speed. Merkle trees for correctness.
+        Real-time bidirectional database sync over Phoenix channels.
+      </p>
+      <div class="btn-group">
+        <a href="#get-started" class="btn btn-primary">Get Started</a>
+        <a href="https://github.com/synclib-io" target="_blank" rel="noopener" class="btn btn-secondary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+
+      <div class="hero-code">
+        <div class="code-window-bar">
+          <span class="code-window-dot"></span>
+          <span class="code-window-dot"></span>
+          <span class="code-window-dot"></span>
+          <span class="code-window-title">app.ts</span>
+        </div>
+<pre><span class="kw">import</span> { <span class="ty">SyncClient</span> } <span class="kw">from</span> <span class="st">'synclib-sync'</span>;
+
+<span class="kw">const</span> sync = <span class="kw">new</span> <span class="ty">SyncClient</span>({
+  db,
+  <span class="pr">serverUrl</span>: <span class="st">'wss://api.example.com/socket'</span>,
+  <span class="pr">clientId</span>: <span class="st">'user-123'</span>,
+  <span class="pr">channels</span>: [{
+    <span class="pr">topic</span>: <span class="st">'sync:user:user-123'</span>,
+    <span class="pr">role</span>: <span class="st">'bidirectional'</span>,
+    <span class="pr">tables</span>: [{ <span class="pr">name</span>: <span class="st">'todos'</span> }],
+  }],
+});
+
+<span class="kw">await</span> sync.<span class="fn">initialize</span>();
+<span class="kw">await</span> sync.<span class="fn">connect</span>(authToken);</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Code Examples ============ -->
+  <section id="get-started" class="code-examples">
+    <div class="container">
+      <h2>Start syncing in <span class="gradient-text">minutes</span></h2>
+      <p class="section-subtitle">
+        Initialize a sync client, connect, and your local database stays in sync automatically.
+      </p>
+
+      <div class="tabs">
+        <input type="radio" name="code-tab" id="tab-ts" checked>
+        <input type="radio" name="code-tab" id="tab-dart">
+
+        <div class="tab-labels">
+          <label for="tab-ts">TypeScript</label>
+          <label for="tab-dart">Dart</label>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel panel-ts">
+<pre><span class="kw">import</span> { <span class="ty">SyncClient</span> } <span class="kw">from</span> <span class="st">'synclib-sync'</span>;
+
+<span class="kw">const</span> sync = <span class="kw">new</span> <span class="ty">SyncClient</span>({
+  db,
+  <span class="pr">serverUrl</span>: <span class="st">'wss://api.example.com/socket'</span>,
+  <span class="pr">clientId</span>: <span class="st">'user-123'</span>,
+  <span class="pr">channels</span>: [{
+    <span class="pr">topic</span>: <span class="st">'sync:user:user-123'</span>,
+    <span class="pr">role</span>: <span class="st">'bidirectional'</span>,
+    <span class="pr">tables</span>: [{ <span class="pr">name</span>: <span class="st">'todos'</span> }],
+  }],
+});
+
+<span class="kw">await</span> sync.<span class="fn">initialize</span>();
+<span class="kw">await</span> sync.<span class="fn">connect</span>(authToken);</pre>
+          </div>
+          <div class="tab-panel panel-dart">
+<pre><span class="kw">final</span> sync = <span class="ty">SyncClient</span>(
+  <span class="pr">config</span>: <span class="ty">SyncClientConfig</span>(
+    <span class="pr">db</span>: db,
+    <span class="pr">serverUrl</span>: <span class="st">'wss://api.example.com/socket'</span>,
+    <span class="pr">clientId</span>: <span class="st">'user-123'</span>,
+    <span class="pr">channels</span>: [
+      <span class="ty">SyncChannel</span>(
+        <span class="pr">topic</span>: <span class="st">'sync:user:user-123'</span>,
+        <span class="pr">role</span>: <span class="ty">ChannelRole</span>.bidirectional,
+        <span class="pr">tables</span>: [<span class="ty">SyncTable</span>(<span class="pr">name</span>: <span class="st">'todos'</span>)],
+      ),
+    ],
+  ),
+);
+
+<span class="kw">await</span> sync.<span class="fn">initialize</span>();
+<span class="kw">await</span> sync.<span class="fn">connect</span>(authToken);</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ How It Works ============ -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>Two-layer sync</h2>
+      <p class="section-subtitle">
+        Fast incremental updates and cryptographic correctness guarantees, working together.
+      </p>
+
+      <div class="layers">
+        <div class="layer-card">
+          <img src="img-seqnum.png" alt="Sequence numbers visualized as glowing hexagonal platforms filling in sequentially" class="layer-img">
+          <span class="layer-label">Layer 1</span>
+          <h3>Sequence Numbers &rarr; Speed</h3>
+          <ul>
+            <li>Every local write gets a monotonically increasing sequence number</li>
+            <li>Sync only sends changes since the last acknowledged seqnum</li>
+            <li>Only new changes travel over the wire</li>
+          </ul>
+          <p class="layer-result">Fast incremental sync</p>
+        </div>
+
+        <div class="layer-card">
+          <img src="img-merkle.png" alt="Merkle tree with glowing neon hash nodes" class="layer-img">
+          <span class="layer-label">Layer 2</span>
+          <h3>Merkle Trees &rarr; Correctness</h3>
+          <ul>
+            <li>Periodic Merkle root comparison between client and server</li>
+            <li>Block-level hashes pinpoint exactly which rows drifted</li>
+            <li>Automatic repair fixes drift without full re-sync</li>
+          </ul>
+          <p class="layer-result">Cryptographic consistency guarantee</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Features ============ -->
+  <section class="features">
+    <div class="container">
+      <h2>Built for <span class="gradient-text">real apps</span></h2>
+      <p class="section-subtitle">
+        Everything you need to ship offline-capable, multi-platform applications.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#9683;</div>
+          <h3>Offline-First</h3>
+          <p>Local SQLite database with automatic change tracking. Works without a connection, syncs when online.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#8644;</div>
+          <h3>Bidirectional Sync</h3>
+          <p>Push, pull, or bidirectional per channel. Configure each channel's sync direction independently.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9634;</div>
+          <h3>Schema Management</h3>
+          <p>Server-driven schema migrations. Clients stay in sync with the latest database structure.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9731;</div>
+          <h3>Multi-Platform</h3>
+          <p>TypeScript/JavaScript for web and Node.js. Dart/Flutter for iOS, Android, and desktop.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9889;</div>
+          <h3>Phoenix Channels</h3>
+          <p>Built on Elixir's Phoenix framework for scalable, fault-tolerant real-time communication.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128274;</div>
+          <h3>Access Control</h3>
+          <p>JWT authentication on every connection. Server-side row filtering ensures no data crosses the wire unless the user is authorized to see it.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127897;</div>
+          <h3>Beyond Database Sync</h3>
+          <p>The same Phoenix channels carry any real-time data — livestreaming, live events, WebRTC signaling, chat, and custom app messages.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#10697;</div>
+          <h3>Extensible Protocol</h3>
+          <p>Handle custom message types with hooks. Add app-specific events without forking the library.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Architecture ============ -->
+  <section class="architecture">
+    <div class="container">
+      <h2>Architecture</h2>
+      <p class="section-subtitle">
+        Clients sync with the server over persistent WebSocket connections.
+      </p>
+
+      <div class="arch-diagram">
+        <div class="arch-flow">
+          <div class="arch-node">
+            <div class="arch-node-label">Client</div>
+            <div class="arch-node-sub">SQLite</div>
+          </div>
+          <div class="arch-arrow">&larr;&rarr;</div>
+          <div class="arch-node">
+            <div class="arch-node-label" style="background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Phoenix Channel</div>
+            <div class="arch-node-sub">WebSocket</div>
+          </div>
+          <div class="arch-arrow">&larr;&rarr;</div>
+          <div class="arch-node">
+            <div class="arch-node-label">Server</div>
+            <div class="arch-node-sub">PostgreSQL</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-steps">
+        <div class="arch-step">
+          <div class="arch-step-num">1</div>
+          <div>Local writes tracked with sequence numbers</div>
+        </div>
+        <div class="arch-step">
+          <div class="arch-step-num">2</div>
+          <div>Changes pushed over WebSocket channel</div>
+        </div>
+        <div class="arch-step">
+          <div class="arch-step-num">3</div>
+          <div>Server applies and broadcasts to other clients</div>
+        </div>
+        <div class="arch-step">
+          <div class="arch-step-num">4</div>
+          <div>Merkle trees verify consistency periodically</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Repos ============ -->
+  <section class="repos">
+    <div class="container">
+      <h2>Repositories</h2>
+      <p class="section-subtitle">
+        Open source, MIT licensed. Each library is independently usable.
+      </p>
+
+      <div class="repos-grid">
+        <a href="https://github.com/synclib-io/synclib-js" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-js</div>
+            <div class="repo-desc">JavaScript/TypeScript SQLite wrapper with change tracking</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-flutter" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-flutter</div>
+            <div class="repo-desc">Dart/Flutter SQLite wrapper with change tracking</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-sync-js" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-sync-js</div>
+            <div class="repo-desc">TypeScript sync client for Phoenix channels</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-sync" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-sync</div>
+            <div class="repo-desc">Dart/Flutter sync client for Phoenix channels</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-server" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-server</div>
+            <div class="repo-desc">Elixir Phoenix sync server</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclibc" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclibc</div>
+            <div class="repo-desc">Cross-platform C library for SQLite change tracking and sync over WebSockets</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-hash" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-hash</div>
+            <div class="repo-desc">Cross-platform Merkle tree hashing library for consistent row, block, and root hashes</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/pg-synclib-hash" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">pg-synclib-hash</div>
+            <div class="repo-desc">PostgreSQL extension for computing row hashes at write time via triggers</div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Migrating from Firebase ============ -->
+  <section class="firestore-migration">
+    <div class="container">
+      <h2>Migrating from <span class="gradient-text">Firebase</span>?</h2>
+      <p class="section-subtitle">
+        Keep your Firestore API calls &mdash; swap the backend to local SQLite with sync.
+        Change one import and your existing code just works.
+      </p>
+
+      <div class="migration-demo">
+        <div class="code-window-bar">
+          <span class="code-window-dot"></span>
+          <span class="code-window-dot"></span>
+          <span class="code-window-dot"></span>
+        </div>
+<pre><span class="cm">// Before:</span>
+<span class="kw">import</span> { getFirestore } <span class="kw">from</span> <span class="st del">'firebase/firestore'</span>;
+
+<span class="cm">// After:</span>
+<span class="kw">import</span> { <span class="ty">FirebaseFirestore</span> } <span class="kw">from</span> <span class="st add">'synclib-firestore'</span>;
+
+<span class="cm">// Your code stays the same:</span>
+<span class="kw">const</span> doc = <span class="kw">await</span> firestore.<span class="fn">collection</span>(<span class="st">'todos'</span>).<span class="fn">doc</span>(<span class="st">'abc'</span>).<span class="fn">get</span>();</pre>
+      </div>
+
+      <div class="repos-grid" style="max-width: 640px; margin: 32px auto 0;">
+        <a href="https://github.com/synclib-io/synclib-firestore" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-firestore</div>
+            <div class="repo-desc">Dart/Flutter Firestore-compatible API for local SQLite via synclib</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/synclib-io/synclib-firestore-js" target="_blank" rel="noopener" class="repo-card">
+          <svg class="repo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+          <div class="repo-info">
+            <div class="repo-name">synclib-firestore-js</div>
+            <div class="repo-desc">TypeScript Firestore-compatible API for local SQLite via synclib</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Cloud / Managed ============ -->
+  <section class="managed">
+    <div class="container">
+      <div class="managed-card">
+        <h2>Need help getting started?</h2>
+        <p>
+          synclib is fully open source and self-hostable. But if you'd rather not manage infrastructure yourself, we offer hosted sync backends and hands-on deployment support — from initial setup to production.
+        </p>
+        <div class="managed-options">
+          <div class="managed-option">
+            <h3>Managed Hosting</h3>
+            <p>We run the sync server, PostgreSQL, and infrastructure for you. Connect your client apps and start syncing.</p>
+          </div>
+          <div class="managed-option">
+            <h3>Deployment Support</h3>
+            <p>We help you deploy synclib on your own infrastructure — cloud or on-prem — and stick around until it's running smoothly.</p>
+          </div>
+        </div>
+        <a href="mailto:contact@synclib.io" class="btn btn-primary">Contact us &rarr; contact@synclib.io</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer class="footer">
+    <div class="container">
+      <p>Built with Elixir, Phoenix, and SQLite</p>
+      <div class="footer-links">
+        <a href="https://github.com/synclib-io" target="_blank" rel="noopener">GitHub</a>
+        <span style="color: var(--text-dim);">&middot;</span>
+        <span>MIT License</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
